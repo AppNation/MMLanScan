@@ -61,6 +61,10 @@
 
 #include <AssertMacros.h>
 
+#ifndef check_compile_time
+    #define check_compile_time(expr) _Static_assert(expr, #expr)
+#endif
+
 #pragma mark * SimplePing
 
 // The SimplePing class is a very simple class that lets you send and receive pings.
