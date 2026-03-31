@@ -159,22 +159,14 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen)
     return [[SimplePing alloc] initWithHostName:NULL address:hostAddress];
 }
 
-- (void)noop
-{
-}
-
 - (void)didFailWithError:(NSError *)error
     // Shut down the pinger object and tell the delegate about the error.
 {
     assert(error != nil);
     
-    // We retain ourselves temporarily because it's common for the delegate method 
-    // to release its last reference to use, which causes -dealloc to be called here. 
-    // If we then reference self on the return path, things go badly.  I don't think 
-    // that happens currently, but I've got into the habit of doing this as a 
-    // defensive measure.
-    
-    [self performSelector:@selector(noop) withObject:nil afterDelay:0.0];
+    // Keep ourselves alive for the duration of this method so that the delegate
+    // callback cannot trigger our deallocation mid-execution.
+    __strong SimplePing *strongSelf __attribute__((unused)) = self;
     
     [self stop];
     if ( (self.delegate != nil) && [self.delegate respondsToSelector:@selector(simplePing:didFailWithError:)] ) {

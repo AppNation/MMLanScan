@@ -84,7 +84,9 @@ static const float PING_TIMEOUT = 1;
 }
 - (void)finishedPing {
     
-    //Calling the completion block
+    [self.simplePing stop];
+    self.simplePing.delegate = nil;
+    
     if (self.result) {
         self.result(errorMessage,self.name);
     }
@@ -101,6 +103,8 @@ static const float PING_TIMEOUT = 1;
 
 -(void)finish {
 
+    [NSObject cancelPreviousPerformRequestsWithTarget:self.simplePing];
+    
     //Removes timer from the NSRunLoop
     [_keepAliveTimer invalidate];
     _keepAliveTimer = nil;
