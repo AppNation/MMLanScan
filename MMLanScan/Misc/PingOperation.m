@@ -12,6 +12,7 @@
 #import "MacFinder.h"
 
 static const float PING_TIMEOUT = 1;
+static const float PING_MAX_LIFETIME = 5;
 
 @interface PingOperation ()
 @property (nonatomic,strong) NSString *ipStr;
@@ -65,8 +66,8 @@ static const float PING_TIMEOUT = 1;
     
     NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
     
-    // Run loops don't run if they don't have input sources or timers on them.  So we add a timer that we never intend to fire.
-    _keepAliveTimer = [NSTimer timerWithTimeInterval:1000000.0 target:self selector:@selector(timeout:) userInfo:nil repeats:NO];
+    // Safety timeout: ensures the operation finishes even if all delegate callbacks are lost
+    _keepAliveTimer = [NSTimer timerWithTimeInterval:PING_MAX_LIFETIME target:self selector:@selector(timeout:) userInfo:nil repeats:NO];
     [runLoop addTimer:_keepAliveTimer forMode:NSDefaultRunLoopMode];
     
     //Ping method
