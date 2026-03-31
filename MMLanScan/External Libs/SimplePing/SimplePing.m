@@ -414,6 +414,14 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen)
     // let CFSocket call us again.
 }
 
+static const void *RetainSocketInfo(const void *info) {
+    return CFBridgingRetain((__bridge id)info);
+}
+
+static void ReleaseSocketInfo(const void *info) {
+    CFBridgingRelease(info);
+}
+
 static void SocketReadCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)
     // This C routine is called by CFSocket when there's data waiting on our 
     // ICMP socket.  It just redirects the call to Objective-C code.
@@ -468,7 +476,7 @@ static void SocketReadCallback(CFSocketRef s, CFSocketCallBackType type, CFDataR
     if (err != 0) {
         [self didFailWithError:[NSError errorWithDomain:NSPOSIXErrorDomain code:err userInfo:nil]];
     } else {
-        CFSocketContext     context = {0, (__bridge void *)(self), NULL, NULL, NULL};
+        CFSocketContext     context = {0, (__bridge void *)(self), RetainSocketInfo, ReleaseSocketInfo, NULL};
         CFRunLoopSourceRef  rls;
         
         // Wrap it in a CFSocket and schedule it on the runloop.

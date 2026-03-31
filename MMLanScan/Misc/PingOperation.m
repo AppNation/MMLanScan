@@ -26,6 +26,7 @@ static const float PING_TIMEOUT = 1;
 
 @implementation PingOperation {
     BOOL _stopRunLoop;
+    BOOL _isFinishing;
     NSTimer *_keepAliveTimer;
     NSError *errorMessage;
     NSTimer *pingTimer;
@@ -83,7 +84,11 @@ static const float PING_TIMEOUT = 1;
     [self.simplePing start];
 }
 - (void)finishedPing {
+    if (_isFinishing) return;
+    _isFinishing = YES;
     
+    [pingTimer invalidate];
+    pingTimer = nil;
     [self.simplePing stop];
     self.simplePing.delegate = nil;
     
@@ -144,22 +149,16 @@ static const float PING_TIMEOUT = 1;
 }
 
 - (void)simplePing:(SimplePing *)pinger didFailWithError:(NSError *)error {
-  
-    [pingTimer invalidate];
     errorMessage = error;
     [self finishedPing];
 }
 
 - (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet error:(NSError *)error {
-    
-    [pingTimer invalidate];
     errorMessage = error;
     [self finishedPing];
 }
 
 - (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet {
-   
-    [pingTimer invalidate];
     [self finishedPing];
 }
 
