@@ -113,23 +113,29 @@
     
     CFHostRef hostRef = CFHostCreateWithAddress(kCFAllocatorDefault, addressRef);
     if (hostRef == nil) {
+        CFRelease(addressRef);
         return nil;
     }
     CFRelease(addressRef);
     
     BOOL succeeded = CFHostStartInfoResolution(hostRef, kCFHostNames, NULL);
     if (!succeeded) {
+        CFRelease(hostRef);
         return nil;
     }
     
-    NSMutableArray *hostnames = [NSMutableArray array];
+    NSString *hostname = nil;
     
     CFArrayRef hostnamesRef = CFHostGetNames(hostRef, NULL);
-    for (int currentIndex = 0; currentIndex < [(__bridge NSArray *)hostnamesRef count]; currentIndex++) {
-        [hostnames addObject:[(__bridge NSArray *)hostnamesRef objectAtIndex:currentIndex]];
+    if (hostnamesRef != NULL) {
+        NSArray *hostnames = (__bridge NSArray *)hostnamesRef;
+        if (hostnames.count > 0) {
+            hostname = hostnames[0];
+        }
     }
     
-    return hostnames[0];
+    CFRelease(hostRef);
+    return hostname;
 }
 
 @end

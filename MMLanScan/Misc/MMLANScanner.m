@@ -24,6 +24,7 @@
 @implementation MMLANScanner {
     BOOL isFinished;
     BOOL isCancelled;
+    dispatch_queue_t _progressQueue;
 }
 
 #pragma mark - Initialization method
@@ -45,7 +46,9 @@
         
         //Add observer to notify the delegate when queue is empty.
         [_queue addObserver:self forKeyPath:@"operations" options:0 context:nil];
-        
+
+        _progressQueue = dispatch_queue_create("com.mmlanscan.progress", DISPATCH_QUEUE_SERIAL);
+
         isFinished = NO;
         isCancelled = NO;
         _isScanning = NO;
@@ -97,7 +100,9 @@
                 return;
             }
             //Since the first half of the operation is completed we will update our proggress by 0.5
-            weakSelf.currentHost = weakSelf.currentHost + 0.5;
+            dispatch_async(weakSelf->_progressQueue, ^{
+                weakSelf.currentHost = weakSelf.currentHost + 0.5;
+            });
             
         }];
         
@@ -109,22 +114,24 @@
             }
             
             //Since the second half of the operation is completed we will update our proggress by 0.5
-            weakSelf.currentHost = weakSelf.currentHost + 0.5;
+            dispatch_async(weakSelf->_progressQueue, ^{
+                weakSelf.currentHost = weakSelf.currentHost + 0.5;
+                float progress = weakSelf.currentHost;
+                NSInteger total = [weakSelf.ipsToPing count];
 
-            if (!error) {
-                //Letting know the delegate that found a new device (on Main Thread)
-                dispatch_async (dispatch_get_main_queue(), ^{
-                    if ([weakSelf.delegate respondsToSelector:@selector(lanScanDidFindNewDevice:)]) {
-                        [weakSelf.delegate lanScanDidFindNewDevice:device];
+                if (!error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([weakSelf.delegate respondsToSelector:@selector(lanScanDidFindNewDevice:)]) {
+                            [weakSelf.delegate lanScanDidFindNewDevice:device];
+                        }
+                    });
+                }
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([weakSelf.delegate respondsToSelector:@selector(lanScanProgressPinged:from:)]) {
+                        [weakSelf.delegate lanScanProgressPinged:progress from:total];
                     }
                 });
-            }
-            
-            //Letting now the delegate the process  (on Main Thread)
-            dispatch_async (dispatch_get_main_queue(), ^{
-                if ([weakSelf.delegate respondsToSelector:@selector(lanScanProgressPinged:from:)]) {
-                    [weakSelf.delegate lanScanProgressPinged:self.currentHost from:[self.ipsToPing count]];
-                }
             });
         }];
 
