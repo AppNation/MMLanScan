@@ -96,7 +96,7 @@
 				279335F31D5D2129001DFE84 /* SimplePing.m */,
 			);
 			name = SimplePing;
-			path = "../MMLanScan/External Libs/SimplePing";
+			path = "../MMLanScan/ExternalLibs/SimplePing";
 			sourceTree = SOURCE_ROOT;
 		};
 		270DDA011E4655C50041A61B /* Data */ = {
@@ -183,7 +183,7 @@
 				270DDA011E4655C50041A61B /* Data */,
 				27F479D61DCBF1D500672012 /* LAN Scan Libs */,
 				27F479D41DCBF19D00672012 /* Operations */,
-				27F479D51DCBF1BA00672012 /* External Libs */,
+				27F479D51DCBF1BA00672012 /* ExternalLibs */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -201,23 +201,23 @@
 		27DBEFFD1E45FEC300685616 /* MacFinder */ = {
 			isa = PBXGroup;
 			children = (
-				27DBF0011E45FEF400685616 /* Network Headers */,
+				27DBF0011E45FEF400685616 /* NetworkHeaders */,
 				27DBEFFE1E45FEF100685616 /* MacFinder.h */,
 				27DBEFFF1E45FEF100685616 /* MacFinder.m */,
 			);
 			name = MacFinder;
-			path = "../MMLanScan/External Libs/MacFinder";
+			path = "../MMLanScan/ExternalLibs/MacFinder";
 			sourceTree = SOURCE_ROOT;
 		};
-		27DBF0011E45FEF400685616 /* Network Headers */ = {
+		27DBF0011E45FEF400685616 /* NetworkHeaders */ = {
 			isa = PBXGroup;
 			children = (
 				27DBF0021E45FF4B00685616 /* if_arp.h */,
 				27DBF0031E45FF4B00685616 /* if_ether.h */,
 				27DBF0041E45FF4B00685616 /* route.h */,
 			);
-			name = "Network Headers";
-			path = "../MMLanScan/External Libs/MacFinder/Network Headers";
+			name = "NetworkHeaders";
+			path = "../MMLanScan/ExternalLibs/MacFinder/NetworkHeaders";
 			sourceTree = SOURCE_ROOT;
 		};
 		27F479D41DCBF19D00672012 /* Operations */ = {
@@ -231,13 +231,13 @@
 			name = Operations;
 			sourceTree = "<group>";
 		};
-		27F479D51DCBF1BA00672012 /* External Libs */ = {
+		27F479D51DCBF1BA00672012 /* ExternalLibs */ = {
 			isa = PBXGroup;
 			children = (
 				270DD9FD1E4653EE0041A61B /* SimplePing */,
 				27DBEFFD1E45FEC300685616 /* MacFinder */,
 			);
-			name = "External Libs";
+			name = "ExternalLibs";
 			sourceTree = "<group>";
 		};
 		27F479D61DCBF1D500672012 /* LAN Scan Libs */ = {

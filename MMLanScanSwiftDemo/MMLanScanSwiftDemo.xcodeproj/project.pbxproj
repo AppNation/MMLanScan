@@ -37,8 +37,8 @@
 		274DE7781DCF2C6C00C6E09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		274DE7841DCF2CD900C6E09A /* LANProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LANProperties.h; path = ../../MMLanScan/Misc/LANProperties.h; sourceTree = "<group>"; };
 		274DE7851DCF2CD900C6E09A /* LANProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LANProperties.m; path = ../../MMLanScan/Misc/LANProperties.m; sourceTree = "<group>"; };
-		274DE7861DCF2CD900C6E09A /* MacFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacFinder.h; path = "../MMLanScan/External Libs/MacFinder/MacFinder.h"; sourceTree = SOURCE_ROOT; };
-		274DE7871DCF2CD900C6E09A /* MacFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MacFinder.m; path = "../MMLanScan/External Libs/MacFinder/MacFinder.m"; sourceTree = SOURCE_ROOT; };
+		274DE7861DCF2CD900C6E09A /* MacFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacFinder.h; path = "../MMLanScan/ExternalLibs/MacFinder/MacFinder.h"; sourceTree = SOURCE_ROOT; };
+		274DE7871DCF2CD900C6E09A /* MacFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MacFinder.m; path = "../MMLanScan/ExternalLibs/MacFinder/MacFinder.m"; sourceTree = SOURCE_ROOT; };
 		274DE7881DCF2CD900C6E09A /* MACOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACOperation.h; path = ../../MMLanScan/Misc/MACOperation.h; sourceTree = "<group>"; };
 		274DE7891DCF2CD900C6E09A /* MACOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MACOperation.m; path = ../../MMLanScan/Misc/MACOperation.m; sourceTree = "<group>"; };
 		274DE78C1DCF2CD900C6E09A /* NetworkCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkCalculator.h; path = ../../MMLanScan/Misc/NetworkCalculator.h; sourceTree = "<group>"; };
@@ -72,22 +72,22 @@
 		270DD9F71E4653500041A61B /* MacFinder */ = {
 			isa = PBXGroup;
 			children = (
-				270DD9F81E4653720041A61B /* Network Headers */,
+				270DD9F81E4653720041A61B /* NetworkHeaders */,
 				274DE7861DCF2CD900C6E09A /* MacFinder.h */,
 				274DE7871DCF2CD900C6E09A /* MacFinder.m */,
 			);
 			name = MacFinder;
-			path = "../MMLanScan/External Libs/MacFinder";
+			path = "../MMLanScan/ExternalLibs/MacFinder";
 			sourceTree = SOURCE_ROOT;
 		};
-		270DD9F81E4653720041A61B /* Network Headers */ = {
+		270DD9F81E4653720041A61B /* NetworkHeaders */ = {
 			isa = PBXGroup;
 			children = (
 				270DD9F91E4653A20041A61B /* if_arp.h */,
 				270DD9FA1E4653A20041A61B /* if_ether.h */,
 				270DD9FB1E4653A20041A61B /* route.h */,
 			);
-			path = "Network Headers";
+			path = "NetworkHeaders";
 			sourceTree = "<group>";
 		};
 		270DD9FC1E4653D20041A61B /* Simple Ping */ = {
@@ -97,7 +97,7 @@
 				274DE7921DCF2CD900C6E09A /* SimplePing.m */,
 			);
 			name = "Simple Ping";
-			path = "../MMLanScan/External Libs/SimplePing";
+			path = "../MMLanScan/ExternalLibs/SimplePing";
 			sourceTree = SOURCE_ROOT;
 		};
 		270DDA021E4656F20041A61B /* Data */ = {
@@ -172,7 +172,7 @@
 				270DDA021E4656F20041A61B /* Data */,
 				274DE7A01DCF2D5800C6E09A /* LAN Scan Libs */,
 				274DE7A11DCF2D7900C6E09A /* Operations */,
-				274DE7A21DCF2D8A00C6E09A /* External Libs */,
+				274DE7A21DCF2D8A00C6E09A /* ExternalLibs */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -201,14 +201,14 @@
 			name = Operations;
 			sourceTree = "<group>";
 		};
-		274DE7A21DCF2D8A00C6E09A /* External Libs */ = {
+		274DE7A21DCF2D8A00C6E09A /* ExternalLibs */ = {
 			isa = PBXGroup;
 			children = (
 				270DD9FC1E4653D20041A61B /* Simple Ping */,
 				270DD9F71E4653500041A61B /* MacFinder */,
 			);
-			name = "External Libs";
-			path = "../MMLanScan/External Libs";
+			name = "ExternalLibs";
+			path = "../MMLanScan/ExternalLibs";
 			sourceTree = SOURCE_ROOT;
 		};
 		274DE7A81DCF2E2700C6E09A /* Storyboards */ = {
