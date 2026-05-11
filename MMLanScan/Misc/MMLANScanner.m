@@ -96,12 +96,13 @@
         
         //The ping operation
         PingOperation *pingOperation = [[PingOperation alloc]initWithIPToPing:ipStr andCompletionHandler:^(NSError  * _Nullable error, NSString  * _Nonnull ip) {
-            if (!weakSelf) {
+            MMLANScanner *strongSelf = weakSelf;
+            if (!strongSelf) {
                 return;
             }
             //Since the first half of the operation is completed we will update our proggress by 0.5
-            dispatch_async(weakSelf->_progressQueue, ^{
-                weakSelf.currentHost = weakSelf.currentHost + 0.5;
+            dispatch_async(strongSelf->_progressQueue, ^{
+                strongSelf.currentHost = strongSelf.currentHost + 0.5;
             });
             
         }];
@@ -109,27 +110,30 @@
         //The Find MAC Address for each operation
         MACOperation *macOperation = [[MACOperation alloc] initWithIPToRetrieveMAC:ipStr andBrandDictionary:self.brandDictionary andCompletionHandler:^(NSError * _Nullable error, NSString * _Nonnull ip, MMDevice * _Nonnull device) {
             
-            if (!weakSelf) {
+            MMLANScanner *strongSelf = weakSelf;
+            if (!strongSelf) {
                 return;
             }
             
             //Since the second half of the operation is completed we will update our proggress by 0.5
-            dispatch_async(weakSelf->_progressQueue, ^{
-                weakSelf.currentHost = weakSelf.currentHost + 0.5;
-                float progress = weakSelf.currentHost;
-                NSInteger total = [weakSelf.ipsToPing count];
+            dispatch_async(strongSelf->_progressQueue, ^{
+                strongSelf.currentHost = strongSelf.currentHost + 0.5;
+                float progress = strongSelf.currentHost;
+                NSInteger total = [strongSelf.ipsToPing count];
 
                 if (!error) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([weakSelf.delegate respondsToSelector:@selector(lanScanDidFindNewDevice:)]) {
-                            [weakSelf.delegate lanScanDidFindNewDevice:device];
+                        id<MMLANScannerDelegate> delegate = strongSelf.delegate;
+                        if ([delegate respondsToSelector:@selector(lanScanDidFindNewDevice:)]) {
+                            [delegate lanScanDidFindNewDevice:device];
                         }
                     });
                 }
 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([weakSelf.delegate respondsToSelector:@selector(lanScanProgressPinged:from:)]) {
-                        [weakSelf.delegate lanScanProgressPinged:progress from:total];
+                    id<MMLANScannerDelegate> delegate = strongSelf.delegate;
+                    if ([delegate respondsToSelector:@selector(lanScanProgressPinged:from:)]) {
+                        [delegate lanScanProgressPinged:progress from:total];
                     }
                 });
             });
